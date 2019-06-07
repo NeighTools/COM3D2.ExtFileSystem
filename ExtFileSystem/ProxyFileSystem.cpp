@@ -66,7 +66,7 @@ std::vector<std::wstring>* CreateListWide(FileSystemArchiveNative* fs, std::vect
 	LOG_SELF(self, "Number of files: " << std::dec << result->size());
 
 	for (auto& s : *result)
-	LOG_SELF(self, "Got file: " << narrow(s));
+		LOG_SELF(self, "Got file: " << narrow(s));
 
 	auto search_path = self->proxy_path / path;
 

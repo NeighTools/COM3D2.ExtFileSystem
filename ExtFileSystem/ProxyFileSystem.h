@@ -14,15 +14,19 @@
 
 namespace fs = std::filesystem;
 
-// Size od the filesystem object in quadwords
-#define FS_ARCHIVE_OBJECT_BASE_SIZE_QWORDS 0x10
+// Size of the filesystem object
+#if _M_IX86
+#define FS_ARCHIVE_OBJECT_BASE_SIZE 0x12
+#elif _M_X64
+#define FS_ARCHIVE_OBJECT_BASE_SIZE 0x10
+#endif
 
 // A helper macro to access the extended archive data
 // Parameters:
 // fs -- Pointer to the current filesystem vtable (basically this in C++)
 // vtable_index -- index of the ARCArchive vtable the current function is located
 #define GET_EXT_THIS(fs, vtable_index) \
-	(reinterpret_cast<ExtArchiveData*>(*(fs - vtable_index + FS_ARCHIVE_OBJECT_BASE_SIZE_QWORDS)))
+	(reinterpret_cast<ExtArchiveData*>(*(fs - vtable_index + FS_ARCHIVE_OBJECT_BASE_SIZE)))
 
 // A helper that creates a function signature and a function pointer type with the same signature
 #define DEF_FUNC(name, return_type, ...) \
