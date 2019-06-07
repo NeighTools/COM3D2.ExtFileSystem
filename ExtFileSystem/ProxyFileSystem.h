@@ -61,11 +61,12 @@ DEF_FUNC(AddAutoPath, void, FileSystemArchiveNative *fs, char *path);
 DEF_FUNC(GetFileWide, void*, FileSystemArchiveNative *fs, wchar_t *path);
 DEF_FUNC(FileExistsWide, bool, FileSystemArchiveNative *fs, wchar_t *path);
 DEF_FUNC(CreateListWide, std::vector<std::wstring> *, FileSystemArchiveNative *fs, std::vector<std::wstring> *vec,
-	wchar_t *path, ListType list_type);
+         wchar_t *path, ListType list_type);
 
 // Third vtable
 
-DEF_FUNC(CreateList, std::vector<std::string> *, FileSystemArchiveNative *fs, std::vector<std::string> *list, char *path, ListType list_type);
+DEF_FUNC(CreateList, std::vector<std::string> *, FileSystemArchiveNative *fs, std::vector<std::string> *list,
+         char *path, ListType list_type);
 DEF_FUNC(GetFile, void*, FileSystemArchiveNative *fs, char *file_str);
 DEF_FUNC(FileExists, bool, FileSystemArchiveNative *fs, char *file_str);
 
@@ -92,15 +93,15 @@ static std::unordered_map<std::wstring, std::wstring> name_to_full_map;
 // Extra data appended to each archive object
 struct ExtArchiveData
 {
-	FileSystemArchiveNative* base;
-	OriginalFunctions& original_functions;
-	fs::path& proxy_path;
+	FileSystemArchiveNative *base;
+	OriginalFunctions &original_functions;
+	fs::path &proxy_path;
 	size_t proxy_path_length;
-	std::unordered_map<std::wstring, std::wstring>& name_to_full_map;
-	std::ofstream* log_stream;
+	std::unordered_map<std::wstring, std::wstring> &name_to_full_map;
+	std::ofstream *log_stream;
 
-	ExtArchiveData(fs::path& proxy_path, OriginalFunctions& original_functions,
-	               std::unordered_map<std::wstring, std::wstring>& name_to_full_map)
+	ExtArchiveData(fs::path &proxy_path, OriginalFunctions &original_functions,
+	               std::unordered_map<std::wstring, std::wstring> &name_to_full_map)
 		: original_functions(original_functions),
 		  proxy_path(proxy_path),
 		  name_to_full_map(name_to_full_map)

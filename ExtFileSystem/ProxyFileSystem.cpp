@@ -4,19 +4,19 @@
 #include "ProxyFileSystem.h"
 #include "WindowsFile.h"
 
-void AddAutoPathForAllFolder(FileSystemArchiveNative* fs)
+void AddAutoPathForAllFolder(FileSystemArchiveNative *fs)
 {
 	auto self = GET_EXT_THIS(fs, 0);
 
 	LOG_SELF(self, "Add auto path for all folder!");
 
-	for (auto& p : fs::recursive_directory_iterator(self->proxy_path))
+	for (auto &p : fs::recursive_directory_iterator(self->proxy_path))
 		self->name_to_full_map[p.path().filename()] = p.path();
 
 	self->original_functions.AddAutoPathForAllFolder(fs);
 }
 
-void AddAutoPath(FileSystemArchiveNative* fs, char* path)
+void AddAutoPath(FileSystemArchiveNative *fs, char *path)
 {
 	auto self = GET_EXT_THIS(fs, 0);
 
@@ -24,7 +24,7 @@ void AddAutoPath(FileSystemArchiveNative* fs, char* path)
 	self->original_functions.AddAutoPath(fs, path);
 }
 
-bool FileExists(FileSystemArchiveNative* fs, char* path)
+bool FileExists(FileSystemArchiveNative *fs, char *path)
 {
 	auto self = GET_EXT_THIS(fs, 4);
 
@@ -39,7 +39,7 @@ bool FileExists(FileSystemArchiveNative* fs, char* path)
 	return self->original_functions.FileExists(fs, path);
 }
 
-bool FileExistsWide(FileSystemArchiveNative* fs, wchar_t* path)
+bool FileExistsWide(FileSystemArchiveNative *fs, wchar_t *path)
 {
 	auto self = GET_EXT_THIS(fs, 2);
 
@@ -54,7 +54,7 @@ bool FileExistsWide(FileSystemArchiveNative* fs, wchar_t* path)
 	return original_functions.FileExistsWide(fs, path);
 }
 
-std::vector<std::wstring>* CreateListWide(FileSystemArchiveNative* fs, std::vector<std::wstring>* vec, wchar_t* path,
+std::vector<std::wstring> *CreateListWide(FileSystemArchiveNative *fs, std::vector<std::wstring> *vec, wchar_t *path,
                                           ListType list_type)
 {
 	auto self = GET_EXT_THIS(fs, 2);
@@ -65,8 +65,8 @@ std::vector<std::wstring>* CreateListWide(FileSystemArchiveNative* fs, std::vect
 
 	LOG_SELF(self, "Number of files: " << std::dec << result->size());
 
-	for (auto& s : *result)
-		LOG_SELF(self, "Got file: " << narrow(s));
+	for (auto &s : *result)
+	LOG_SELF(self, "Got file: " << narrow(s));
 
 	auto search_path = self->proxy_path / path;
 
@@ -77,7 +77,7 @@ std::vector<std::wstring>* CreateListWide(FileSystemArchiveNative* fs, std::vect
 	{
 		LOG_SELF(self, "Searching for top contents at " << narrow(search_path));
 
-		for (auto& p : fs::directory_iterator(search_path,
+		for (auto &p : fs::directory_iterator(search_path,
 		                                      fs::directory_options::follow_directory_symlink | fs::directory_options::
 		                                      skip_permission_denied))
 		{
@@ -92,7 +92,7 @@ std::vector<std::wstring>* CreateListWide(FileSystemArchiveNative* fs, std::vect
 	{
 		LOG_SELF(self, "Searching for recursive contents at " << narrow(search_path));
 
-		for (auto& p : fs::recursive_directory_iterator(search_path,
+		for (auto &p : fs::recursive_directory_iterator(search_path,
 		                                                fs::directory_options::follow_directory_symlink | fs::
 		                                                directory_options::skip_permission_denied))
 		{
@@ -108,7 +108,7 @@ std::vector<std::wstring>* CreateListWide(FileSystemArchiveNative* fs, std::vect
 	return result;
 }
 
-std::vector<std::string>* CreateList(FileSystemArchiveNative* fs, std::vector<std::string>* list, char* file_path,
+std::vector<std::string> *CreateList(FileSystemArchiveNative *fs, std::vector<std::string> *list, char *file_path,
                                      ListType list_type)
 {
 	auto self = GET_EXT_THIS(fs, 4);
@@ -117,7 +117,7 @@ std::vector<std::string>* CreateList(FileSystemArchiveNative* fs, std::vector<st
 	return result;
 }
 
-void* GetFile(FileSystemArchiveNative* fs, char* file_str)
+void *GetFile(FileSystemArchiveNative *fs, char *file_str)
 {
 	auto self = GET_EXT_THIS(fs, 4);
 
@@ -148,7 +148,7 @@ void* GetFile(FileSystemArchiveNative* fs, char* file_str)
 	return self->original_functions.GetFile(fs, file_str);
 }
 
-void* GetFileWide(FileSystemArchiveNative* fs, wchar_t* path)
+void *GetFileWide(FileSystemArchiveNative *fs, wchar_t *path)
 {
 	auto self = GET_EXT_THIS(fs, 2);
 
