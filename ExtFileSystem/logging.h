@@ -57,6 +57,7 @@ static std::ofstream* LogStream = nullptr;
 #define LOG(msg) *LogStream << msg << std::endl
 #define N(str) narrow(str)
 #define INIT_LOG(path) init_log(path)
+#define REINIT_LOG(logger) LogStream = logger;
 
 inline void init_log(std::filesystem::path const& root)
 {
@@ -76,5 +77,6 @@ inline void init_log(std::filesystem::path const& root)
 #define N(str) ""
 
 #define INIT_LOG(path)
+#define REINIT_LOG(logger)
 
 #endif

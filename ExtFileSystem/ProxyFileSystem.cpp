@@ -10,6 +10,8 @@ void AddAutoPathForAllFolder(FileSystemArchiveNative *fs)
 {
 	auto self = GET_EXT_THIS(fs, 0);
 
+	REINIT_LOG(self->log_stream);
+
 	LOG_SELF(self, "Add auto path for all folder!");
 
 	for (auto &p : fs::recursive_directory_iterator(self->proxy_path))
@@ -139,17 +141,19 @@ FileMemory *get_file(ExtArchiveData *ext, wchar_t const *file_path, std::functio
 	auto path = ext->proxy_path / file_path;
 	if (res != ext->name_to_full_map.end())
 	{
-		LOG_SELF(self, "FILE: Loading from " << narrow(res->second));
-
-		result = new WindowsFile(res->second);
-		ATTACH_LOGGER(result, self->log_stream);
+		LOG_SELF(ext, "FILE: Loading from " << narrow(res->second));
+		
+		auto win_logger = new WindowsFile(res->second);
+		ATTACH_LOGGER(win_logger, ext->log_stream);
+		result = win_logger;
 	}
 	else if (exists(path))
 	{
-		LOG_SELF(self, "FILE: Loading from " << narrow(path));
+		LOG_SELF(ext, "FILE: Loading from " << narrow(path));
 
-		result = new WindowsFile(path);
-		ATTACH_LOGGER(result, self->log_stream);
+		auto win_logger = new WindowsFile(path);
+		ATTACH_LOGGER(win_logger, ext->log_stream);
+		result = win_logger;
 	}
 	result = reinterpret_cast<FileMemory*>(original());
 
@@ -166,9 +170,9 @@ void *GetFile(FileSystemArchiveNative *fs, char *file_str)
 	LOG_SELF(self, "FILE: " << file_str);
 
 	auto wide_path = widen(file_str);
-	return get_file(self, wide_path.c_str(), [&self, &file_str]()
+	return get_file(self, wide_path.c_str(), [&self, &file_str, &fs]()
 	{
-		return self->original_functions.GetFile(self->base, file_str);
+		return self->original_functions.GetFile(fs, file_str);
 	});
 }
 
@@ -178,8 +182,8 @@ void *GetFileWide(FileSystemArchiveNative *fs, wchar_t *path)
 
 	LOG_SELF(self, "FILE (WIDE): " << narrow(path));
 
-	return get_file(self, path, [&self, &path]()
+	return get_file(self, path, [&self, &path, &fs]()
 	{
-		return self->original_functions.GetFileWide(self->base, path);
+		return self->original_functions.GetFileWide(fs, path);
 	});
 }

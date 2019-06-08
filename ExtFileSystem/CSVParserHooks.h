@@ -6,6 +6,7 @@
 #include "NamedFile.h"
 #include "ProxyFileSystem.h"
 #include "CSVAppendParser.h"
+#include "logging.h"
 
 struct CSVParserData
 {
@@ -16,9 +17,14 @@ struct CSVParserData
 
 DEF_HOOK(bool, DLL_CSV_Open, CSVParserData* parser_data, FileMemory* file)
 {
+	LOG("Calling DLL_CSV_Open!");
+
 	auto named_file = dynamic_cast<NamedFile*>(file);
 	if (!named_file)
+	{
+		LOG("File is not NamedFile! Returning back...");
 		return DLL_CSV_Open_original(parser_data, file);
+	}
 
 	auto append_parser = dynamic_cast<CSVAppendParser*>(parser_data->csv_parser);
 	auto append_paths = csv_append_paths.find(named_file->filename);
