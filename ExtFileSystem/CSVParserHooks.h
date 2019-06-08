@@ -21,16 +21,15 @@ DEF_HOOK(bool, DLL_CSV_Open, CSVParserData* parser_data, FileMemory* file)
 
 	auto named_file = dynamic_cast<NamedFile*>(file);
 	if (!named_file)
-	{
-		LOG("File is not NamedFile! Returning back...");
 		return DLL_CSV_Open_original(parser_data, file);
-	}
 
 	auto append_parser = dynamic_cast<CSVAppendParser*>(parser_data->csv_parser);
 	auto append_paths = csv_append_paths.find(named_file->filename);
 
 	if (append_paths == csv_append_paths.end())
 	{
+		LOG("Nothing to append! Returning back...");
+
 		if (append_parser)
 		{
 			append_parser->clear_append_data();

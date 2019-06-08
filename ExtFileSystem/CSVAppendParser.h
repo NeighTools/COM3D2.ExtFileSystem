@@ -8,8 +8,10 @@ class CSVAppendParser : public ICsvParser
 public:
 	CSVAppendParser(ICsvParser *original_parser);
 
+	[[nodiscard]] constexpr bool is_valid_append_cell(int col, int row) const;
+	[[nodiscard]] constexpr int get_cell_index(int col, int row) const;
 	void clear_append_data();
-	void initialize_csv(std::vector<std::wstring> const &values);
+	void initialize_csv(std::vector<std::wstring> const &paths);
 	ICsvParser *dispose(bool disposing) override;
 	void get_as_bytes(int col, int row, void *dest, int size) override;
 	int copy_str(int col, int row, std::string *str) override;
@@ -27,6 +29,6 @@ public:
 	ICsvParser* original_parser;
 
 private:
-	int cols, rows;
-	char *values;
+	int cols, rows, original_rows;
+	std::vector<std::string> cells;
 };
