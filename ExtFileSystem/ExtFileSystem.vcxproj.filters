@@ -28,6 +28,9 @@
     <Filter Include="Header Files\Hooks">
       <UniqueIdentifier>{9fdf6ea0-642f-4bba-9131-fe8f2625db96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\CSV">
+      <UniqueIdentifier>{987c6393-5965-488c-8197-25c2e0eaf97b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logging.h">
@@ -60,6 +63,9 @@
     <ClInclude Include="CSVParserHooks.h">
       <Filter>Header Files\Hooks</Filter>
     </ClInclude>
+    <ClInclude Include="CSVAppendParser.h">
+      <Filter>Header Files\CSV</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -73,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="NamedFile.cpp">
       <Filter>Source Files\FilePointers</Filter>
+    </ClCompile>
+    <ClCompile Include="CSVAppendParser.cpp">
+      <Filter>Source Files\CSV</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

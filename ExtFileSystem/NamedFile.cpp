@@ -1,6 +1,6 @@
 #include "NamedFile.h"
 
-NamedFile::NamedFile(FileMemory *wrapped, wchar_t *filename)
+NamedFile::NamedFile(FileMemory *wrapped, wchar_t const *filename)
 {
 	this->wrapped = wrapped;
 	this->filename = filename;

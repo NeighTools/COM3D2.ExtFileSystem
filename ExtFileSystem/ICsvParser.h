@@ -7,7 +7,7 @@
 class ICsvParser  // NOLINT(hicpp-special-member-functions)
 {
 protected:
-	virtual ~ICsvParser() = default;
+	~ICsvParser() = default;
 public:
 	virtual ICsvParser* dispose(bool disposing) = 0;
 	virtual void get_as_bytes(int col, int row, void* dest, int size) = 0;

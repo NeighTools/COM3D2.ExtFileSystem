@@ -240,6 +240,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CSVAppendParser.h" />
     <ClInclude Include="CSVParserHooks.h" />
     <ClInclude Include="FileSystemHooks.h" />
     <ClInclude Include="heap.h" />
@@ -252,6 +253,7 @@
     <ClInclude Include="WindowsFile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CSVAppendParser.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NamedFile.cpp" />
     <ClCompile Include="ProxyFileSystem.cpp" />
