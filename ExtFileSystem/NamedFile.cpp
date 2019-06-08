@@ -1,6 +1,6 @@
 #include "NamedFile.h"
 
-NamedFile::NamedFile(FileMemory *wrapped, std::string_view &filename)
+NamedFile::NamedFile(FileMemory *wrapped, wchar_t *filename)
 {
 	this->wrapped = wrapped;
 	this->filename = filename;

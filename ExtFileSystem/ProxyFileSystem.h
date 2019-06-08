@@ -89,6 +89,7 @@ struct OriginalFunctions
 static OriginalFunctions original_functions;
 static fs::path proxy_path;
 static std::unordered_map<std::wstring, std::wstring> name_to_full_map;
+static std::unordered_map<std::wstring, std::vector<std::wstring>> csv_append_paths;
 
 // Extra data appended to each archive object
 struct ExtArchiveData

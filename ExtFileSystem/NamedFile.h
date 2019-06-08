@@ -3,10 +3,10 @@
 #include "FileMemory.h"
 #include "logging.h"
 
-class NamedFile : FileMemory
+class NamedFile : public FileMemory
 {
 public:
-	NamedFile(FileMemory *wrapped, std::string_view &filename);
+	NamedFile(FileMemory *wrapped, wchar_t const* filename);
 
 	FileMemory *dispose(bool disposing) override;
 	bool close_file() override;
@@ -21,7 +21,7 @@ public:
 	bool set_file2(void *data, uint64_t data_length, uint64_t file_offset) override;
 	size_t move_memory(void *dest, void *src, size_t len) override;
 
-	std::string_view filename;
+	std::wstring filename;
 	FileMemory* wrapped;
 
 	DEF_LOGGER;

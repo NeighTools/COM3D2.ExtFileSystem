@@ -3,6 +3,8 @@
 #include <optional>
 #include "ProxyFileSystem.h"
 #include "WindowsFile.h"
+#include "NamedFile.h"
+#include <functional>
 
 void AddAutoPathForAllFolder(FileSystemArchiveNative *fs)
 {
@@ -11,7 +13,17 @@ void AddAutoPathForAllFolder(FileSystemArchiveNative *fs)
 	LOG_SELF(self, "Add auto path for all folder!");
 
 	for (auto &p : fs::recursive_directory_iterator(self->proxy_path))
-		self->name_to_full_map[p.path().filename()] = p.path();
+	{
+		// If it's a CSV file, map it to the appropriate nei file as a possible append 
+		if (p.path().extension() == ".csv")
+		{
+			auto [kv_pair, ok] = csv_append_paths.emplace(p.path().stem().wstring().append(L".nei"),
+			                                              std::vector<std::wstring>());
+			kv_pair->second.emplace_back(p.path());
+		}
+
+		self->name_to_full_map.emplace(p.path().filename(), p.path());
+	}
 
 	self->original_functions.AddAutoPathForAllFolder(fs);
 }
@@ -117,6 +129,34 @@ std::vector<std::string> *CreateList(FileSystemArchiveNative *fs, std::vector<st
 	return result;
 }
 
+FileMemory *get_file(ExtArchiveData *ext, wchar_t const *file_path, std::function<void*()> const &original)
+{
+	FileMemory *result = nullptr;
+
+	auto res = ext->name_to_full_map.find(file_path);
+	auto path = ext->proxy_path / file_path;
+	if (res != ext->name_to_full_map.end())
+	{
+		LOG_SELF(self, "FILE: Loading from " << narrow(res->second));
+
+		result = new WindowsFile(res->second);
+		ATTACH_LOGGER(result, self->log_stream);
+	}
+	else if (exists(path))
+	{
+		LOG_SELF(self, "FILE: Loading from " << narrow(path));
+
+		result = new WindowsFile(path);
+		ATTACH_LOGGER(result, self->log_stream);
+	}
+	result = reinterpret_cast<FileMemory*>(original());
+
+	if (path.extension() == ".nei")
+		result = new NamedFile(result, file_path);
+
+	return result;
+}
+
 void *GetFile(FileSystemArchiveNative *fs, char *file_str)
 {
 	auto self = GET_EXT_THIS(fs, 4);
@@ -124,28 +164,10 @@ void *GetFile(FileSystemArchiveNative *fs, char *file_str)
 	LOG_SELF(self, "FILE: " << file_str);
 
 	auto wide_path = widen(file_str);
-
-	auto res = self->name_to_full_map.find(wide_path);
-	if (res != self->name_to_full_map.end())
+	return get_file(self, wide_path.c_str(), [&self, &file_str]()
 	{
-		LOG_SELF(self, "FILE: Loading from " << narrow(res->second));
-
-		auto result = new WindowsFile(res->second);
-		ATTACH_LOGGER(result, self->log_stream);
-		return result;
-	}
-
-	auto path = self->proxy_path / wide_path;
-	if (exists(path))
-	{
-		LOG_SELF(self, "FILE: Loading from " << narrow(path));
-
-		auto result = new WindowsFile(path);
-		ATTACH_LOGGER(result, self->log_stream);
-		return result;
-	}
-
-	return self->original_functions.GetFile(fs, file_str);
+		return self->original_functions.GetFile(self->base, file_str);
+	});
 }
 
 void *GetFileWide(FileSystemArchiveNative *fs, wchar_t *path)
@@ -154,25 +176,8 @@ void *GetFileWide(FileSystemArchiveNative *fs, wchar_t *path)
 
 	LOG_SELF(self, "FILE (WIDE): " << narrow(path));
 
-	auto res = self->name_to_full_map.find(path);
-	if (res != self->name_to_full_map.end())
+	return get_file(self, path, [&self, &path]()
 	{
-		LOG_SELF(self, "FILE (WIDE): Loading from " << narrow(res->second));
-
-		auto result = new WindowsFile(res->second);
-		ATTACH_LOGGER(result, self->log_stream);
-		return result;
-	}
-
-	auto file_path = self->proxy_path / path;
-	if (exists(file_path))
-	{
-		LOG_SELF(self, "FILE (WIDE): Loading from " << narrow(file_path));
-
-		auto result = new WindowsFile(file_path);
-		ATTACH_LOGGER(result, self->log_stream);
-		return result;
-	}
-
-	return self->original_functions.GetFileWide(fs, path);
+		return self->original_functions.GetFileWide(self->base, path);
+	});
 }
