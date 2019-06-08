@@ -240,9 +240,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CSVParserHooks.h" />
+    <ClInclude Include="FileSystemHooks.h" />
+    <ClInclude Include="heap.h" />
     <ClInclude Include="ICsvParser.h" />
     <ClInclude Include="NamedFile.h" />
-    <ClInclude Include="CSVParserData.h" />
     <ClInclude Include="ProxyFileSystem.h" />
     <ClInclude Include="FileMemory.h" />
     <ClInclude Include="hook.h" />

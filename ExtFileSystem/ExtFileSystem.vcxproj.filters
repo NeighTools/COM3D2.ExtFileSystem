@@ -25,6 +25,9 @@
     <Filter Include="Header Files\CSV">
       <UniqueIdentifier>{533d1c8e-2d7a-4939-82ae-677564ed8a68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Hooks">
+      <UniqueIdentifier>{9fdf6ea0-642f-4bba-9131-fe8f2625db96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logging.h">
@@ -48,8 +51,14 @@
     <ClInclude Include="NamedFile.h">
       <Filter>Header Files\FilePointers</Filter>
     </ClInclude>
-    <ClInclude Include="CSVParserData.h">
-      <Filter>Header Files\CSV</Filter>
+    <ClInclude Include="FileSystemHooks.h">
+      <Filter>Header Files\Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="heap.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="CSVParserHooks.h">
+      <Filter>Header Files\Hooks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

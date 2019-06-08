@@ -2,6 +2,11 @@
 
 #include <windows.h>
 
+#define DEF_HOOK(ret_type, func, ...) \
+	typedef ret_type (*func##_original_t)(__VA_ARGS__);\
+	static func##_original_t func##_original = nullptr;\
+	ret_type func##_hook(__VA_ARGS__)
+
 #define RVA2PTR(t, base, rva) ((t)(((char*)base) + rva))
 
 inline BOOL patch_cur_iat(HMODULE hmodule, char const* targetModule, void* targetFunction, void* hook)
