@@ -2,13 +2,15 @@
 
 #include "FileMemory.h"
 #include "logging.h"
+#include "ProxyFileSystem.h"
 
 class NamedFile : public FileMemory
 {
 public:
-	NamedFile(FileMemory *wrapped, wchar_t const* filename);
+	NamedFile(FileMemory *wrapped, wchar_t const *filename, ExtArchiveData *ext_archive_data);
 
-	FileMemory *dispose(bool disposing) override;
+	//FileMemory *dispose(bool disposing) override;
+	~NamedFile() override;
 	bool close_file() override;
 	bool seek(uint64_t dist, bool absolute) override;
 	uint64_t read(void *dest, uint64_t length) override;
@@ -22,7 +24,8 @@ public:
 	size_t move_memory(void *dest, void *src, size_t len) override;
 
 	std::wstring filename;
-	FileMemory* wrapped;
+	FileMemory *wrapped;
+	ExtArchiveData *ext_archive_data;
 
-	DEF_LOGGER;
+DEF_LOGGER;
 };

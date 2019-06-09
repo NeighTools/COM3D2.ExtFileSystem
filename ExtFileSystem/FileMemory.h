@@ -7,12 +7,10 @@
  * 
  * Used by FileSystemArchive to open files from ARCs
  */
-class FileMemory // NOLINT(cppcoreguidelines-special-member-functions)
+class FileMemory // NOLINT(cppcoreguidelines-special-member-functions, hicpp-special-member-functions)
 {
-protected:
-	~FileMemory() = default;
 public:
-	virtual FileMemory *dispose(bool disposing) = 0;
+	virtual ~FileMemory() = default;
 	virtual bool close_file() = 0;
 	virtual bool seek(uint64_t dist, bool absolute) = 0;
 	virtual uint64_t read(void *dest, uint64_t length) = 0;
