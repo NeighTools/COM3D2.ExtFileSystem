@@ -6,9 +6,8 @@
  */
 class ICsvParser  // NOLINT(hicpp-special-member-functions)
 {
-protected:
-	~ICsvParser() = default;
 public:
+	~ICsvParser() = default;
 	virtual ICsvParser* dispose(bool disposing) = 0;
 	virtual void get_as_bytes(int col, int row, void* dest, int size) = 0;
 	virtual int copy_str(int col, int row, std::string* str) = 0;
@@ -21,6 +20,6 @@ public:
 	virtual bool is_valid() = 0;
 	virtual int get_cols() = 0;
 	virtual int get_rows() = 0;
-	virtual int get_as_bool(int col, int row) = 0;
+	virtual bool get_as_bool(int col, int row) = 0;
 };
 

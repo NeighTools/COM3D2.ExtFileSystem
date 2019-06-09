@@ -24,7 +24,7 @@ public:
 	bool is_valid() override;
 	int get_cols() override;
 	int get_rows() override;
-	int get_as_bool(int col, int row) override;
+	bool get_as_bool(int col, int row) override;
 
 	ICsvParser* original_parser;
 

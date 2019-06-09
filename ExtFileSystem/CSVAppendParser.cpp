@@ -44,6 +44,7 @@ void split(std::vector<std::string> &result, std::string &str, char separator)
 
 CSVAppendParser::CSVAppendParser(ICsvParser *original_parser) : original_parser(original_parser), cols(0), rows(0)
 {
+	LOG("[CSV] ctor");
 }
 
 constexpr bool CSVAppendParser::is_valid_append_cell(int col, int row) const
@@ -58,11 +59,14 @@ constexpr int CSVAppendParser::get_cell_index(int col, int row) const
 
 void CSVAppendParser::clear_append_data()
 {
+	LOG("[CSV] Clearing append data");
 	cells.clear();
 }
 
 void CSVAppendParser::initialize_csv(std::vector<std::wstring> const &paths)
 {
+	LOG("[CSV] Initializing append data with " << paths.size() << " append CSVs");
+
 	clear_append_data();
 
 	std::vector<std::string> lines;
@@ -78,7 +82,7 @@ void CSVAppendParser::initialize_csv(std::vector<std::wstring> const &paths)
 			std::getline(file, line);
 
 			auto &cells = csv_file.emplace_back();
-			split(cells, line, ';');
+			split(cells, line, ',');
 
 			if (cells.empty())
 				csv_file.pop_back();
@@ -104,9 +108,12 @@ void CSVAppendParser::initialize_csv(std::vector<std::wstring> const &paths)
 
 ICsvParser *CSVAppendParser::dispose(bool disposing)
 {
+	LOG("[CSV] Disposing");
+
 	clear_append_data();
 
 	original_parser->dispose(disposing);
+	delete original_parser;
 
 	if (disposing)
 		delete this;
@@ -115,6 +122,8 @@ ICsvParser *CSVAppendParser::dispose(bool disposing)
 
 void CSVAppendParser::get_as_bytes(int col, int row, void *dest, int size)
 {
+	LOG("[CSV] Getting (" << col << ", " << row << ") as bytes");
+	
 	if (original_parser->is_valid_cell(col, row))
 	{
 		original_parser->get_as_bytes(col, row, dest, size);
@@ -134,6 +143,8 @@ void CSVAppendParser::get_as_bytes(int col, int row, void *dest, int size)
 
 int CSVAppendParser::copy_str(int col, int row, std::string *str)
 {
+	LOG("[CSV] Copying (" << col << ", " << row << ") to a string");
+
 	if (original_parser->is_valid_cell(col, row))
 		return original_parser->copy_str(col, row, str);
 
@@ -151,6 +162,8 @@ int CSVAppendParser::copy_str(int col, int row, std::string *str)
 
 void CSVAppendParser::get_as_string(int col, int row, void *dest, int size)
 {
+	LOG("[CSV] Getting (" << col << ", " << row << ") as a string");
+
 	if (original_parser->is_valid_cell(col, row))
 	{
 		original_parser->get_as_string(col, row, dest, size);
@@ -172,6 +185,8 @@ void CSVAppendParser::get_as_string(int col, int row, void *dest, int size)
 
 int CSVAppendParser::get_as_int(int col, int row)
 {
+	LOG("[CSV] Getting (" << col << ", " << row << ") as int");
+
 	if (original_parser->is_valid_cell(col, row))
 	{
 		return original_parser->get_as_int(col, row);
@@ -186,6 +201,8 @@ int CSVAppendParser::get_as_int(int col, int row)
 
 float CSVAppendParser::get_as_float(int col, int row)
 {
+	LOG("[CSV] Getting (" << col << ", " << row << ") as float");
+
 	if (original_parser->is_valid_cell(col, row))
 	{
 		return original_parser->get_as_float(col, row);
@@ -204,6 +221,8 @@ float CSVAppendParser::get_as_float(int col, int row)
 
 int CSVAppendParser::get_cell_strlen(int col, int row)
 {
+	LOG("[CSV] Getting (" << col << ", " << row << ") strlen");
+
 	if (original_parser->is_valid_cell(col, row))
 	{
 		return original_parser->get_cell_strlen(col, row);
@@ -217,6 +236,8 @@ int CSVAppendParser::get_cell_strlen(int col, int row)
 
 int CSVAppendParser::get_cell_byte_length(int col, int row)
 {
+	LOG("[CSV] Getting (" << col << ", " << row << ") byte length");
+
 	if (original_parser->is_valid_cell(col, row))
 	{
 		return original_parser->get_cell_byte_length(col, row);
@@ -250,18 +271,21 @@ int CSVAppendParser::get_rows()
 	return original_parser->get_rows() + rows;
 }
 
-int CSVAppendParser::get_as_bool(int col, int row)
+bool CSVAppendParser::get_as_bool(int col, int row)
 {
+	LOG("[CSV] Getting (" << col << ", " << row << ") as boolean");
+
 	if (original_parser->is_valid_cell(col, row))
 	{
 		return original_parser->get_as_bool(col, row);
 	}
 
 	if (!is_valid_append_cell(col, row))
-		return 0;
+		return false;
 
 	auto &cell = cells[get_cell_index(col, row)];
 	if (cell.empty())
-		return 0;
-	return std::stoi(cell);
+		return false;
+
+	return std::stoi(cell) != 0;
 }
