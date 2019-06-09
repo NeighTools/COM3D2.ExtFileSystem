@@ -13,75 +13,78 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\FilePointers">
-      <UniqueIdentifier>{3392e88c-af77-45cb-b91f-05b60653d11d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FilePointers">
-      <UniqueIdentifier>{e66084bf-eb04-4f04-90f3-db7b59f616f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Util">
-      <UniqueIdentifier>{b543c9e9-154f-40e4-9120-134dfd844e91}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\CSV">
-      <UniqueIdentifier>{533d1c8e-2d7a-4939-82ae-677564ed8a68}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Hooks">
-      <UniqueIdentifier>{9fdf6ea0-642f-4bba-9131-fe8f2625db96}</UniqueIdentifier>
+      <UniqueIdentifier>{3a84e57e-763a-4bf9-9179-672ea4db4465}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\CSV">
-      <UniqueIdentifier>{987c6393-5965-488c-8197-25c2e0eaf97b}</UniqueIdentifier>
+      <UniqueIdentifier>{22298d77-8250-4239-a330-d7a7ffd1c0af}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="logging.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="hook.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="FileMemory.h">
-      <Filter>Header Files\FilePointers</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowsFile.h">
-      <Filter>Header Files\FilePointers</Filter>
-    </ClInclude>
-    <ClInclude Include="ProxyFileSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ICsvParser.h">
-      <Filter>Header Files\CSV</Filter>
-    </ClInclude>
-    <ClInclude Include="NamedFile.h">
-      <Filter>Header Files\FilePointers</Filter>
-    </ClInclude>
-    <ClInclude Include="FileSystemHooks.h">
-      <Filter>Header Files\Hooks</Filter>
-    </ClInclude>
-    <ClInclude Include="heap.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="CSVParserHooks.h">
-      <Filter>Header Files\Hooks</Filter>
-    </ClInclude>
-    <ClInclude Include="CSVAppendParser.h">
-      <Filter>Header Files\CSV</Filter>
-    </ClInclude>
+    <Filter Include="Source Files\Filesystem">
+      <UniqueIdentifier>{8f08bd89-dcdc-441d-98af-2276c50e6e4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Filesystem">
+      <UniqueIdentifier>{404b76cf-4a63-42bd-a387-ca9b8e06005e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Filesystem\Files">
+      <UniqueIdentifier>{9c9f8579-e0c6-4177-b8e2-34f58aa3d5de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Filesystem\Files">
+      <UniqueIdentifier>{1954233c-bb2d-4f82-bf77-172cf0ebc0c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{48405f26-1bca-4779-acff-5ca9cf348cc5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WindowsFile.cpp">
-      <Filter>Source Files\FilePointers</Filter>
-    </ClCompile>
-    <ClCompile Include="ProxyFileSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NamedFile.cpp">
-      <Filter>Source Files\FilePointers</Filter>
-    </ClCompile>
-    <ClCompile Include="CSVAppendParser.cpp">
+    <ClCompile Include="CSV\CSVAppendParser.cpp">
       <Filter>Source Files\CSV</Filter>
     </ClCompile>
+    <ClCompile Include="Filesystem\ProxyFileSystem.cpp">
+      <Filter>Source Files\Filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Filesystem\Files\WindowsFile.cpp">
+      <Filter>Source Files\Filesystem\Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Filesystem\Files\NamedFile.cpp">
+      <Filter>Source Files\Filesystem\Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CSV\CSVAppendParser.h">
+      <Filter>Header Files\CSV</Filter>
+    </ClInclude>
+    <ClInclude Include="CSV\CSVParserHooks.h">
+      <Filter>Header Files\CSV</Filter>
+    </ClInclude>
+    <ClInclude Include="CSV\ICsvParser.h">
+      <Filter>Header Files\CSV</Filter>
+    </ClInclude>
+    <ClInclude Include="Filesystem\FileSystemHooks.h">
+      <Filter>Header Files\Filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Filesystem\ProxyFileSystem.h">
+      <Filter>Header Files\Filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Filesystem\Files\NamedFile.h">
+      <Filter>Header Files\Filesystem\Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Filesystem\Files\WindowsFile.h">
+      <Filter>Header Files\Filesystem\Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Filesystem\Files\FileMemory.h">
+      <Filter>Header Files\Filesystem\Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\hook.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\logging.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\heap.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #pragma once
 #include "ProxyFileSystem.h"
-#include "logging.h"
-#include "hook.h"
+#include "../Util/logging.h"
+#include "../Util/hook.h"
 
 struct FSArchive
 {

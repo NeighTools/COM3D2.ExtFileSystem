@@ -2,7 +2,7 @@
 
 #include "ICsvParser.h"
 #include <vector>
-#include "logging.h"
+#include "../Util/logging.h"
 
 class CSVAppendParser : public ICsvParser
 {
@@ -30,7 +30,7 @@ public:
 	bool get_as_bool(int col, int row) override;
 
 	ICsvParser *original_parser;
-DEF_LOGGER;
+	DEF_LOGGER;
 private:
 	int cols, rows, original_rows;
 	std::vector<std::string> cells;

@@ -240,24 +240,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CSVAppendParser.h" />
-    <ClInclude Include="CSVParserHooks.h" />
-    <ClInclude Include="FileSystemHooks.h" />
-    <ClInclude Include="heap.h" />
-    <ClInclude Include="ICsvParser.h" />
-    <ClInclude Include="NamedFile.h" />
-    <ClInclude Include="ProxyFileSystem.h" />
-    <ClInclude Include="FileMemory.h" />
-    <ClInclude Include="hook.h" />
-    <ClInclude Include="logging.h" />
-    <ClInclude Include="WindowsFile.h" />
+    <ClCompile Include="CSV\CSVAppendParser.cpp" />
+    <ClCompile Include="Filesystem\Files\NamedFile.cpp" />
+    <ClCompile Include="Filesystem\Files\WindowsFile.cpp" />
+    <ClCompile Include="Filesystem\ProxyFileSystem.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CSVAppendParser.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="NamedFile.cpp" />
-    <ClCompile Include="ProxyFileSystem.cpp" />
-    <ClCompile Include="WindowsFile.cpp" />
+    <ClInclude Include="CSV\CSVAppendParser.h" />
+    <ClInclude Include="CSV\CSVParserHooks.h" />
+    <ClInclude Include="CSV\ICsvParser.h" />
+    <ClInclude Include="Filesystem\FileSystemHooks.h" />
+    <ClInclude Include="Filesystem\Files\FileMemory.h" />
+    <ClInclude Include="Filesystem\Files\NamedFile.h" />
+    <ClInclude Include="Filesystem\Files\WindowsFile.h" />
+    <ClInclude Include="Filesystem\ProxyFileSystem.h" />
+    <ClInclude Include="Util\heap.h" />
+    <ClInclude Include="Util\hook.h" />
+    <ClInclude Include="Util\logging.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,9 +1,9 @@
 #include <string>
-#include "logging.h"
+#include "../Util/logging.h"
 #include <optional>
 #include "ProxyFileSystem.h"
-#include "WindowsFile.h"
-#include "NamedFile.h"
+#include "Files/WindowsFile.h"
+#include "Files/NamedFile.h"
 #include <functional>
 
 void AddAutoPathForAllFolder(FileSystemArchiveNative *fs)

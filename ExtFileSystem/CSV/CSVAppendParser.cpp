@@ -1,7 +1,7 @@
-#include  "CSVAppendParser.h"
+#include "CSVAppendParser.h"
 #include <fstream>
 #include <sstream>
-#include "logging.h"
+#include "../Util/logging.h"
 
 void split(std::vector<std::string> &result, std::string &str, char separator)
 {

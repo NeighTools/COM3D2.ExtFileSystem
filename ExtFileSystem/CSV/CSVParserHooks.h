@@ -1,11 +1,11 @@
 #pragma once
 
 #include "ICsvParser.h"
-#include "FileMemory.h"
-#include "hook.h"
-#include "NamedFile.h"
+#include "../Filesystem/Files/FileMemory.h"
+#include "../Util/hook.h"
+#include "../Filesystem/Files/NamedFile.h"
 #include "CSVAppendParser.h"
-#include "logging.h"
+#include "../Util/logging.h"
 
 struct CSVParserData
 {
