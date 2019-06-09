@@ -1,17 +1,15 @@
 #include "NamedFile.h"
 
-NamedFile::NamedFile(FileMemory *wrapped, wchar_t const *filename)
+NamedFile::NamedFile(FileMemory *wrapped, wchar_t const *filename, ExtArchiveData *ext_archive_data)
 {
 	this->wrapped = wrapped;
 	this->filename = filename;
+	this->ext_archive_data = ext_archive_data;
 }
 
-FileMemory * NamedFile::dispose(bool disposing)
+NamedFile::~NamedFile()
 {
-	wrapped->dispose(disposing);
-	if(disposing)
-		delete this;
-	return this;
+	delete wrapped;
 }
 
 bool NamedFile::close_file()

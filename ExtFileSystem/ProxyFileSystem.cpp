@@ -19,8 +19,10 @@ void AddAutoPathForAllFolder(FileSystemArchiveNative *fs)
 		// If it's a CSV file, map it to the appropriate nei file as a possible append 
 		if (p.path().extension() == ".csv")
 		{
-			auto [kv_pair, ok] = csv_append_paths.emplace(p.path().stem().wstring().append(L".nei"),
-			                                              std::vector<std::wstring>());
+			LOG_SELF(self, "Got CSV file that is potentially a NEI append");
+			auto [kv_pair, ok] = self->csv_append_paths.emplace(p.path().stem().wstring().append(L".nei"),
+			                                                    std::vector<std::wstring>());
+			LOG_SELF(self, "Mapping " << N(kv_pair->first) << " => " << p.path());
 			kv_pair->second.emplace_back(p.path());
 		}
 
@@ -142,7 +144,7 @@ FileMemory *get_file(ExtArchiveData *ext, wchar_t const *file_path, std::functio
 	if (res != ext->name_to_full_map.end())
 	{
 		LOG_SELF(ext, "FILE: Loading from " << narrow(res->second));
-		
+
 		auto win_logger = new WindowsFile(res->second);
 		ATTACH_LOGGER(win_logger, ext->log_stream);
 		result = win_logger;
@@ -157,8 +159,9 @@ FileMemory *get_file(ExtArchiveData *ext, wchar_t const *file_path, std::functio
 	}
 	result = reinterpret_cast<FileMemory*>(original());
 
+	// Handle CSV append by creating a named file
 	if (path.extension() == ".nei")
-		result = new NamedFile(result, file_path);
+		result = new NamedFile(result, file_path, ext);
 
 	return result;
 }

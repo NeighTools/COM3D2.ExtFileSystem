@@ -4,7 +4,6 @@
 #include "FileMemory.h"
 #include "hook.h"
 #include "NamedFile.h"
-#include "ProxyFileSystem.h"
 #include "CSVAppendParser.h"
 #include "logging.h"
 
@@ -24,7 +23,11 @@ DEF_HOOK(bool, DLL_CSV_Open, CSVParserData* parser_data, FileMemory* file)
 		return DLL_CSV_Open_original(parser_data, file);
 
 	auto append_parser = dynamic_cast<CSVAppendParser*>(parser_data->csv_parser);
+	auto &csv_append_paths = named_file->ext_archive_data->csv_append_paths;
+
 	auto append_paths = csv_append_paths.find(named_file->filename);
+
+	LOG("Got " << csv_append_paths.size() << " items in CSV append paths");
 
 	if (append_paths == csv_append_paths.end())
 	{
@@ -42,10 +45,19 @@ DEF_HOOK(bool, DLL_CSV_Open, CSVParserData* parser_data, FileMemory* file)
 		return orig;
 	}
 
+	LOG("Found stuff to append! Calling parser normally...");
+
 	auto orig = DLL_CSV_Open_original(parser_data, file);
 
+
 	if (!append_parser)
+	{
+		LOG("No append parser initialized! Creating one...");
 		append_parser = new CSVAppendParser(parser_data->csv_parser);
+		ATTACH_LOGGER(append_parser, LogStream);
+	}
+
+	LOG("No append parser initialized! Initializing parser...");
 	append_parser->initialize_csv(append_paths->second);
 
 	parser_data->csv_parser = append_parser;

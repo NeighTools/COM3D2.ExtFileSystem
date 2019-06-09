@@ -89,7 +89,10 @@ struct OriginalFunctions
 static OriginalFunctions original_functions;
 static fs::path proxy_path;
 static std::unordered_map<std::wstring, std::wstring> name_to_full_map;
-static std::unordered_map<std::wstring, std::vector<std::wstring>> csv_append_paths;
+
+using CSVAppendPathsMap = std::unordered_map<std::wstring, std::vector<std::wstring>>;
+static CSVAppendPathsMap csv_append_paths;
+
 
 // Extra data appended to each archive object
 struct ExtArchiveData
@@ -100,12 +103,15 @@ struct ExtArchiveData
 	size_t proxy_path_length;
 	std::unordered_map<std::wstring, std::wstring> &name_to_full_map;
 	std::ofstream *log_stream;
+	CSVAppendPathsMap &csv_append_paths;
 
 	ExtArchiveData(fs::path &proxy_path, OriginalFunctions &original_functions,
-	               std::unordered_map<std::wstring, std::wstring> &name_to_full_map)
+	               std::unordered_map<std::wstring, std::wstring> &name_to_full_map,
+	               CSVAppendPathsMap &csv_append_paths)
 		: original_functions(original_functions),
 		  proxy_path(proxy_path),
-		  name_to_full_map(name_to_full_map)
+		  name_to_full_map(name_to_full_map),
+		  csv_append_paths(csv_append_paths)
 	{
 		proxy_path_length = proxy_path.generic_wstring().size();
 	}
