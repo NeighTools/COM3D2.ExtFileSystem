@@ -9,15 +9,10 @@ WindowsFile::WindowsFile(std::wstring path)
 	this->stream.seekg(0, std::ios::beg);
 }
 
-WindowsFile* WindowsFile::dispose(bool disposing)
+WindowsFile::~WindowsFile()
 {
 	CLASS_LOG("Disposing!");
-
-	this->stream.close();
-
-	if (disposing)
-		delete this;
-	return this;
+	stream.close();
 }
 
 bool WindowsFile::close_file()
@@ -34,14 +29,14 @@ bool WindowsFile::seek(uint64_t dist, bool absolute)
 	return true;
 }
 
-uint64_t WindowsFile::read(void* dest, uint64_t length)
+uint64_t WindowsFile::read(void *dest, uint64_t length)
 {
 	CLASS_LOG("Reading data!");
 	this->stream.read((char*)dest, length);
 	return this->stream.gcount();
 }
 
-uint64_t WindowsFile::read_from(void* buffer, uint64_t pos, uint64_t length)
+uint64_t WindowsFile::read_from(void *buffer, uint64_t pos, uint64_t length)
 {
 	CLASS_LOG("Reading data from pos!");
 	size_t prev = this->stream.tellg();
@@ -70,25 +65,25 @@ uint64_t WindowsFile::length()
 	return this->len;
 }
 
-bool WindowsFile::set_file(void* data, uint64_t data_length, uint64_t file_offset)
+bool WindowsFile::set_file(void *data, uint64_t data_length, uint64_t file_offset)
 {
 	CLASS_LOG("Setting file");
 	return false;
 }
 
-bool WindowsFile::set_file2(void* data, uint64_t data_length, uint64_t file_offset)
+bool WindowsFile::set_file2(void *data, uint64_t data_length, uint64_t file_offset)
 {
 	CLASS_LOG("Setting file2");
 	return false;
 }
 
-void* WindowsFile::get_data_ptr()
+void *WindowsFile::get_data_ptr()
 {
 	CLASS_LOG("Getting raw data ptr file");
 	return nullptr;
 }
 
-size_t WindowsFile::move_memory(void* dest, void* src, size_t len)
+size_t WindowsFile::move_memory(void *dest, void *src, size_t len)
 {
 	CLASS_LOG("Moving file ptr");
 	return 0;
