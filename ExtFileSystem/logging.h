@@ -4,7 +4,7 @@
 #include <fstream>
 #include <filesystem>
 
-static std::string narrow(std::wstring const& str)
+static std::string narrow(std::wstring const &str)
 {
 	const auto char_len = WideCharToMultiByte(CP_UTF8, 0, str.c_str(), str.length(), nullptr, 0, nullptr, nullptr);
 
@@ -18,7 +18,7 @@ static std::string narrow(std::wstring const& str)
 	return result;
 }
 
-static std::string narrow_view(std::wstring_view const& str)
+static std::string narrow_view(std::wstring_view const &str)
 {
 	const auto char_len = WideCharToMultiByte(CP_UTF8, 0, str.data(), str.length(), nullptr, 0, nullptr, nullptr);
 
@@ -32,7 +32,7 @@ static std::string narrow_view(std::wstring_view const& str)
 	return result;
 }
 
-static std::wstring widen(std::string const& str)
+static std::wstring widen(std::string const &str)
 {
 	const auto char_len = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), str.length(), nullptr, 0);
 
@@ -45,7 +45,7 @@ static std::wstring widen(std::string const& str)
 	return result;
 }
 
-static std::ofstream* LogStream = nullptr;
+static std::ofstream *LogStream = nullptr;
 
 #ifdef _VERBOSE
 
@@ -59,7 +59,7 @@ static std::ofstream* LogStream = nullptr;
 #define INIT_LOG(path) init_log(path)
 #define REINIT_LOG(logger) LogStream = logger;
 
-inline void init_log(std::filesystem::path const& root)
+inline void init_log(std::filesystem::path const &root)
 {
 	LogStream = new std::ofstream();
 	const auto log_file = root / L"extfilesystem.log";
@@ -69,7 +69,7 @@ inline void init_log(std::filesystem::path const& root)
 #else
 
 #define DEF_LOGGER
-#define CLASS_LOG
+#define CLASS_LOG(msg)
 #define ATTACH_LOGGER(obj, log_ptr)
 
 #define LOG_SELF(self, msg)
