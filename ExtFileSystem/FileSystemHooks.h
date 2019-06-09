@@ -5,17 +5,17 @@
 
 struct FSArchive
 {
-	void* fs_object;
+	void *fs_object;
 	int fs_type;
 };
 
 static bool v_table_initialized = false;
-static void** FSArchiveVTable = nullptr;
-static void** FSArchiveIOVTable = nullptr;
-static void** FSArchiveWideFsTable = nullptr;
+static void **FSArchiveVTable = nullptr;
+static void **FSArchiveIOVTable = nullptr;
+static void **FSArchiveWideFsTable = nullptr;
 static std::vector<ExtArchiveData*> extraArchiveDatas;
 
-inline void init_virutal_tables(void** fs_object)
+inline void init_virutal_tables(void **fs_object)
 {
 #define CPY_VTABLE(dest, index, size) \
 	auto dest##_temp = reinterpret_cast<void**>(fs_object[index]);\
@@ -79,7 +79,7 @@ DEF_HOOK(void, DLL_FileSystem_CreateFileSystemArchive, FSArchive* dest)
 	new_obj[4] = FSArchiveIOVTable;
 
 	// Create external data to store pointers to global data
-	auto ext_data = new ExtArchiveData(proxy_path, original_functions, name_to_full_map);
+	auto ext_data = new ExtArchiveData(proxy_path, original_functions, name_to_full_map, csv_append_paths);
 	ext_data->base = new_obj;
 	ext_data->log_stream = LogStream;
 
